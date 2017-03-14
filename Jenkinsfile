@@ -1,34 +1,34 @@
 pipeline {
-  agent any
+    agent any
 
-  tools {
-    maven 'maven-3'
-  }
-
-  stages {
-
-    stage ('Clean') {
-      steps {
-        sh 'mvn clean'
-      }
+    tools {
+        maven 'maven-3'
     }
 
-    stage ('Build') {
-      steps {
-        sh 'mvn package'
-      }
+    stages {
 
-      post {
-          always {
-              junit 'target/surefire-reports/**/*.xml'
-          }
-      }
-    }
+        stage('Clean') {
+            steps {
+                sh 'mvn clean'
+            }
+        }
 
-    stage ('Archive') {
-      steps {
-        archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-      }
+        stage('Build') {
+            steps {
+                sh 'mvn package'
+            }
+
+            post {
+                always {
+                    junit 'target/surefire-reports/**/*.xml'
+                }
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            }
+        }
     }
-  }
 }
