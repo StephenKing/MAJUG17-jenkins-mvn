@@ -17,6 +17,12 @@ pipeline {
       steps {
         sh 'mvn package'
       }
+
+      post {
+          success {
+              junit 'target/surefire-reports/**/*.xml'
+          }
+      }
     }
 
     stage ('Archive') {
