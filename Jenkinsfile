@@ -1,8 +1,8 @@
 pipeline {
-    agent any
-
-    tools {
-        maven 'maven-3'
+    agent {
+        docker {
+            image 'maven:3-alpine'
+        }
     }
 
     stages {
